@@ -1,5 +1,6 @@
 package com.example.admin.homeawayapp.view.mainactivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -10,10 +11,14 @@ import android.view.View;
 import com.example.admin.homeawayapp.R;
 import com.example.admin.homeawayapp.data.entities.Event;
 import com.example.admin.homeawayapp.util.RecyclerItemClickListener;
+import com.example.admin.homeawayapp.util.SearchQueryEvent;
 import com.example.admin.homeawayapp.view.App;
 import com.example.admin.homeawayapp.view.BaseActivity;
+import com.example.admin.homeawayapp.view.detailsactivity.DetailsActivity;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +26,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
+import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements MainActivityContract.View, RecyclerItemClickListener.OnRecyclerClickListener  {
 
@@ -33,10 +40,12 @@ public class MainActivity extends BaseActivity implements MainActivityContract.V
     RecyclerView rvSearchList;
     private EventsRecyclerViewAdapter eventsRecyclerViewAdapter;
 
+    @DebugLog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         activateToolbar(false);
         setupDagger();
         setupRecyclerView();
@@ -98,18 +107,30 @@ public class MainActivity extends BaseActivity implements MainActivityContract.V
 
     }
 
+    @DebugLog
     @Override
     public void showComplete() {
 
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-
+    @DebugLog
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSearchQueryEvent(SearchQueryEvent queryEvent) {
+        presenter.loadData(queryEvent.getQueryText());
     }
 
+    @DebugLog
+    @Override
+    public void onItemClick(View view, int position) {
+        Timber.d("The event normal clicked is: " + eventsRecyclerViewAdapter.getEvent(position).toString());
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra(SEATGEEK_EVENT , eventsRecyclerViewAdapter.getEvent(position));
+        startActivity(intent);
+    }
+
+    @DebugLog
     @Override
     public void onItemLongClick(View view, int position) {
-
+        Timber.d("The event long clicked is: " + eventsRecyclerViewAdapter.getEvent(position).toString());
     }
 }

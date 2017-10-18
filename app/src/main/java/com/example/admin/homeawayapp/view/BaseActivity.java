@@ -66,7 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 searchView.onActionViewCollapsed();
                 searchView.clearFocus();
-                //EventBus.getDefault().post(new SearchQueryEvent(query));
+                EventBus.getDefault().post(new SearchQueryEvent(query));
                 return true;
             }
 

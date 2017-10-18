@@ -3,4 +3,5 @@
     <dimen name="cardview_subtext_padding">16dp</dimen>
     <dimen name="cardview_title_textsize">24sp</dimen>
     <dimen name="cardview_subtext_textsize">14sp</dimen>
+    <dimen name="cardview_title_paddingtop">24dp</dimen>
 </resources>
