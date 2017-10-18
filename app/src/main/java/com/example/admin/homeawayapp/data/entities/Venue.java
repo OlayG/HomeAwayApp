@@ -1,12 +1,15 @@
 
 package com.example.admin.homeawayapp.data.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Venue {
+public class Venue implements Parcelable {
 
     @SerializedName("city")
     @Expose
@@ -65,6 +68,33 @@ public class Venue {
     @SerializedName("display_location")
     @Expose
     private String displayLocation;
+
+    protected Venue(Parcel in) {
+        city = in.readString();
+        url = in.readString();
+        nameV2 = in.readString();
+        slug = in.readString();
+        postalCode = in.readString();
+        name = in.readString();
+        state = in.readString();
+        address = in.readString();
+        extendedAddress = in.readString();
+        timezone = in.readString();
+        country = in.readString();
+        displayLocation = in.readString();
+    }
+
+    public static final Creator<Venue> CREATOR = new Creator<Venue>() {
+        @Override
+        public Venue createFromParcel(Parcel in) {
+            return new Venue(in);
+        }
+
+        @Override
+        public Venue[] newArray(int size) {
+            return new Venue[size];
+        }
+    };
 
     public String getCity() {
         return city;
@@ -218,4 +248,24 @@ public class Venue {
         this.displayLocation = displayLocation;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(city);
+        parcel.writeString(url);
+        parcel.writeString(nameV2);
+        parcel.writeString(slug);
+        parcel.writeString(postalCode);
+        parcel.writeString(name);
+        parcel.writeString(state);
+        parcel.writeString(address);
+        parcel.writeString(extendedAddress);
+        parcel.writeString(timezone);
+        parcel.writeString(country);
+        parcel.writeString(displayLocation);
+    }
 }

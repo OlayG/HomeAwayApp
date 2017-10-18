@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.admin.homeawayapp.R;
+import com.example.admin.homeawayapp.adapter.EventsRecyclerViewAdapter;
 import com.example.admin.homeawayapp.data.entities.Event;
 import com.example.admin.homeawayapp.util.RecyclerItemClickListener;
 import com.example.admin.homeawayapp.util.SearchQueryEvent;

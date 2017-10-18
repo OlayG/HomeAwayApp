@@ -7,19 +7,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.admin.homeawayapp.R;
 import com.example.admin.homeawayapp.data.entities.Event;
 import com.example.admin.homeawayapp.view.App;
 import com.example.admin.homeawayapp.view.BaseActivity;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
 import timber.log.Timber;
 
@@ -34,22 +37,28 @@ public class DetailsActivity extends AppCompatActivity implements DetailsActivit
     Gson gson;
     Event event;
     List<Event> likedEvents;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
+    @BindView(R.id.tvVenue)
+    TextView tvVenue;
+    @BindView(R.id.tvDateTime)
+    TextView tvDateTime;
+    @BindView(R.id.ivPhoto)
+    ImageView ivPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+        ButterKnife.bind(this);
         setupDagger();
         activateToolbar(true);
-        getLikedEvents();
         event = getIntent().getParcelableExtra(BaseActivity.SEATGEEK_EVENT);
-
-    }
-
-    private void getLikedEvents() {
-        String emptyList = gson.toJson(new ArrayList<Event>());
-        likedEvents = gson.fromJson(preferences.getString(MY_LIKES, emptyList),
-                new TypeToken<ArrayList<Event>>(){}.getType());
+        Timber.d("The event is " + event.toString());
+        tvTitle.setText(event.getTitle());
+        tvVenue.setText(event.getVenue().getDisplayLocation());
+        tvDateTime.setText(event.getDatetimeLocal());
+        Glide.with(this).load(R.drawable.no_image).into(ivPhoto);
     }
 
     public void activateToolbar(boolean enableHome) {

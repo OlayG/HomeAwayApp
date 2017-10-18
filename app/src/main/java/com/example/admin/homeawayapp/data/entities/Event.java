@@ -81,6 +81,7 @@ public class Event implements Parcelable {
         type = in.readString();
         announceDate = in.readString();
         url = in.readString();
+        venue = in.readParcelable(getClass().getClassLoader());
         visibleUntilUtc = in.readString();
         datetimeUtc = in.readString();
         createdAt = in.readString();
@@ -306,6 +307,7 @@ public class Event implements Parcelable {
         parcel.writeString(type);
         parcel.writeString(announceDate);
         parcel.writeString(url);
+        parcel.writeParcelable(venue, i);
         parcel.writeString(visibleUntilUtc);
         parcel.writeString(datetimeUtc);
         parcel.writeString(createdAt);
