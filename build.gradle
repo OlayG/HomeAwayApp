@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
-
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -15,9 +15,25 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://maven.google.com" }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    androidVersion = '26.1.0'
+    daggerVersion = '2.11'
+    butterknifeVersion = '8.8.1'
+    retrofitVersion = '2.3.0'
+    gsonVersion = '2.7'
+    okhttpVersion = '3.9.0'
+    rxjavaVersion = '2.0.1'
+    rxjavaretrofitVersion = '2.3.0'
+    eventbusVersion = '3.0.0'
+    picassoVersion = '2.5.2'
+    glideVersion = '4.1.1'
+    timberVersion = '4.5.1'
 }
